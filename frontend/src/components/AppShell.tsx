@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import { saveLastModule } from '../services/studentState'
+import { ROUTES } from '../constants/routes'
 
 type NavItem = {
   to: string
@@ -14,21 +15,21 @@ type AppShellProps = {
 }
 
 const pathToLabel: Record<string, string> = {
-  '/': 'Home',
-  '/dashboard': 'Dashboard',
-  '/learn': 'Learn',
-  '/datasets': 'Datasets',
-  '/data-explorer': 'Data Explorer',
-  '/data-cleaning-lab': 'Data Cleaning Lab',
-  '/visualization-lab': 'Visualization Lab',
-  '/statistics-lab': 'Statistics Lab',
-  '/insights-lab': 'Insights Lab',
-  '/practice': 'Practice',
-  '/challenges': 'Challenges',
-  '/projects': 'Projects',
-  '/learning-path': 'Learning Path',
-  '/resources': 'Resources',
-  '/progress': 'Progress',
+  [ROUTES.HOME]: 'Home',
+  [ROUTES.DASHBOARD]: 'Dashboard',
+  [ROUTES.LEARN]: 'Learn',
+  [ROUTES.DATASETS]: 'Datasets',
+  [ROUTES.DATA_EXPLORER]: 'Data Explorer',
+  [ROUTES.DATA_CLEANING_LAB]: 'Data Cleaning Lab',
+  [ROUTES.VISUALIZATION_LAB]: 'Visualization Lab',
+  [ROUTES.STATISTICS_LAB]: 'Statistics Lab',
+  [ROUTES.INSIGHTS_LAB]: 'Insights Lab',
+  [ROUTES.PRACTICE]: 'Practice',
+  [ROUTES.CHALLENGES]: 'Challenges',
+  [ROUTES.PROJECTS]: 'Projects',
+  [ROUTES.LEARNING_PATH]: 'Learning Path',
+  [ROUTES.RESOURCES]: 'Resources',
+  [ROUTES.PROGRESS]: 'Progress',
 }
 
 export default function AppShell({ navItems, children }: AppShellProps) {
@@ -39,11 +40,16 @@ export default function AppShell({ navItems, children }: AppShellProps) {
     saveLastModule(location.pathname)
   }, [location.pathname])
 
-  const currentModule = useMemo(() => pathToLabel[location.pathname] ?? 'Module', [location.pathname])
+  const currentModule = useMemo(
+    () => pathToLabel[location.pathname] ?? 'Module',
+    [location.pathname]
+  )
+
   const breadcrumbs = useMemo(() => {
-    if (location.pathname === '/') {
+    if (location.pathname === ROUTES.HOME) {
       return ['Home']
     }
+
     return ['Home', currentModule]
   }, [location.pathname, currentModule])
 
@@ -54,12 +60,15 @@ export default function AppShell({ navItems, children }: AppShellProps) {
           <p className="brand-kicker">University Edition</p>
           <h2>DataScience Lab</h2>
         </div>
+
         <nav className="side-nav" aria-label="Primary navigation">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
-              className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              className={({ isActive }) =>
+                `nav-item ${isActive ? 'active' : ''}`
+              }
               onClick={() => setMobileOpen(false)}
             >
               {item.label}
@@ -78,11 +87,13 @@ export default function AppShell({ navItems, children }: AppShellProps) {
           >
             Menu
           </button>
+
           <div className="header-meta">
             <p className="breadcrumbs">{breadcrumbs.join(' / ')}</p>
             <h1 className="module-indicator">{currentModule}</h1>
           </div>
         </header>
+
         <main className="main-content">{children}</main>
       </div>
     </div>
