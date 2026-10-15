@@ -44,6 +44,7 @@ docker compose up --build
 Access:
 
 - Frontend: http://localhost:5173
+- Frontend on port 80: http://datascience-lab.127.0.0.1.nip.io/
 - Backend API: http://localhost:8000/api
 - Backend docs: http://localhost:8000/docs
 
@@ -59,7 +60,7 @@ docker compose down
 
 1. Docker Desktop Kubernetes is enabled and running.
 2. kubectl context is `docker-desktop`.
-3. ingress-nginx is installed.
+3. An NGINX ingress controller is installed and listening on host port 80.
 
 ### 4.2 Deploy
 
@@ -80,7 +81,7 @@ Configured hosts in [k8s/ingress.yaml](k8s/ingress.yaml):
 - `datascience-lab.local`
 - `datascience-lab.127.0.0.1.nip.io`
 
-Recommended local URL (works without editing hosts file):
+Once the ingress controller is listening on host port 80, this local URL resolves to loopback without editing the hosts file:
 
 - http://datascience-lab.127.0.0.1.nip.io/
 
