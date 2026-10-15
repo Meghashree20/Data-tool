@@ -1,0 +1,20 @@
+/** Shared frontend route paths. Keep navigation and route declarations in sync here. */
+export const ROUTES = {
+  HOME: '/',
+  HOME_ALIAS: '/home',
+  DASHBOARD: '/dashboard',
+  LEARN: '/learn',
+  DATASETS: '/datasets',
+  DATA_EXPLORER: '/data-explorer',
+  LEGACY_DATA_EXPLORER: '/data-explorer/legacy',
+  DATA_CLEANING_LAB: '/data-cleaning-lab',
+  VISUALIZATION_LAB: '/visualization-lab',
+  STATISTICS_LAB: '/statistics-lab',
+  INSIGHTS_LAB: '/insights-lab',
+  PRACTICE: '/practice',
+  CHALLENGES: '/challenges',
+  PROJECTS: '/projects',
+  LEARNING_PATH: '/learning-path',
+  RESOURCES: '/resources',
+  PROGRESS: '/progress',
+} as const

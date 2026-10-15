@@ -17,6 +17,9 @@ spec:
         - name: frontend
           image: datascience-lab-frontend:k8s-v2
           imagePullPolicy: IfNotPresent
+          env:
+            - name: BACKEND_URL
+              value: http://datascience-lab-backend.data-visualization-tool.svc.cluster.local:8000
           ports:
             - containerPort: 80
           readinessProbe:
