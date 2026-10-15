@@ -16,12 +16,14 @@ Traffic model in Kubernetes:
 3. API requests to `/api/*` are routed to backend service.
 4. Backend responds from FastAPI endpoints.
 
+The frontend container's `/api` proxy target is set with `BACKEND_URL`: Docker Compose uses `http://backend:8000`, while Kubernetes uses the backend Service DNS name.
+
 ## 2. File-by-File Reference (Current Repo)
 
 - [backend/Dockerfile](backend/Dockerfile): Backend container build and runtime command.
 - [backend/.dockerignore](backend/.dockerignore): Backend build context exclusions.
 - [frontend/Dockerfile](frontend/Dockerfile): Frontend multi-stage build (Node build + NGINX runtime).
-- [frontend/nginx.conf](frontend/nginx.conf): SPA routing and `/api` reverse proxy to backend service inside Kubernetes.
+- [frontend/nginx.conf](frontend/nginx.conf): SPA routing and `/api` reverse proxy, rendered at container startup using `BACKEND_URL`.
 - [frontend/.dockerignore](frontend/.dockerignore): Frontend build context exclusions.
 - [docker-compose.yml](docker-compose.yml): Local two-container stack on ports 5173 and 8000.
 - [k8s/namespace.yaml](k8s/namespace.yaml): Namespace `data-visualization-tool`.
